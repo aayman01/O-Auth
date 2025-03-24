@@ -36,4 +36,12 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.get("/", (req, res));
+app.get("/", (req, res) =>{
+    res.send("<a href='/auth/google'>Login with Google</a>");
+});
+
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile" , "email"] }));
+
+app.get("/auth/google/callback", passport.authenticate("google"), (req, res) => {
+  res.redirect("/profile");
+});
